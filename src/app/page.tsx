@@ -1,7 +1,11 @@
-import { artists } from "@/data/artists";
+import { getArtists } from "@/lib/artists";
 import ArtistCard from "@/components/ArtistCard";
 
-export default function Home() {
+export const revalidate = 60;
+
+export default async function Home() {
+  const artists = await getArtists();
+
   return (
     <main className="mx-auto max-w-6xl px-6 py-12">
       <header className="mb-10 text-center">

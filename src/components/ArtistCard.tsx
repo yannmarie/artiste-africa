@@ -1,8 +1,8 @@
 import Link from "next/link";
-import { Artist } from "@/data/artists";
+import { ArtistSummary } from "@/types/artist";
 import ArtistAvatar from "@/components/ArtistAvatar";
 
-export default function ArtistCard({ artist }: { artist: Artist }) {
+export default function ArtistCard({ artist }: { artist: ArtistSummary }) {
   return (
     <Link
       href={`/artistes/${artist.slug}`}

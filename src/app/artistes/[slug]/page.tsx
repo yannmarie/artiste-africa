@@ -1,10 +1,13 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { artists, getArtistBySlug } from "@/data/artists";
+import { getArtistBySlug, getArtistSlugs } from "@/lib/artists";
 import ArtistAvatar from "@/components/ArtistAvatar";
 
-export function generateStaticParams() {
-  return artists.map((artist) => ({ slug: artist.slug }));
+export const revalidate = 60;
+
+export async function generateStaticParams() {
+  const slugs = await getArtistSlugs();
+  return slugs.map((slug) => ({ slug }));
 }
 
 export default async function ArtistPage({
@@ -13,7 +16,7 @@ export default async function ArtistPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const artist = getArtistBySlug(slug);
+  const artist = await getArtistBySlug(slug);
 
   if (!artist) {
     notFound();
